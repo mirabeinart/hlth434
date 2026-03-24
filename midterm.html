@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Page Title Here</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Source+Serif+4:wght@300;400;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy:    #0f2240;
+      --teal:    #1a7a6e;
+      --teal-lt: #d4ecea;
+      --cream:   #f8f4ef;
+      --warm:    #e8dfd4;
+      --accent:  #c95f2a;
+      --text:    #1c1c1c;
+      --muted:   #5a6070;
+      --white:   #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Serif 4', Georgia, serif;
+      background: var(--cream);
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--navy);
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    .header-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 72px 40px 64px;
+      position: relative;
+      z-index: 2;
+    }
+    .header-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #7ab8b2;
+      margin-bottom: 20px;
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 800;
+      line-height: 1.15;
+      max-width: 720px;
+    }
+    header h1 em { color: #7ab8b2; font-style: italic; }
+    .header-sub {
+      margin-top: 20px;
+      font-size: 1rem;
+      color: #adbfcc;
+      max-width: 560px;
+    }
+    .header-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      z-index: 1;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--warm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    nav ul {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      list-style: none;
+    }
+    nav a {
+      display: block;
+      padding: 16px 22px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    nav a:hover { color: var(--teal); border-color: var(--teal); }
+
+    /* ── LAYOUT ── */
+    main { max-width: 960px; margin: 0 auto; padding: 0 40px 80px; }
+    section { padding: 72px 0 32px; }
+    section + section { border-top: 1px solid var(--warm); }
+
+    /* ── TYPOGRAPHY ── */
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 14px;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--navy);
+      margin-bottom: 24px;
+    }
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--navy);
+      margin: 36px 0 16px;
+    }
+    p { margin-bottom: 1.2em; color: #333; }
+
+    /* ── STAT CARDS (3-column row) ── */
+    /* Usage: place inside a <div class="visual-row"> */
+    .visual-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin: 36px 0;
+    }
+    .visual-row.two-col { grid-template-columns: 1fr 1fr; }
+
+    .stat-card {
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 12px;
+      padding: 28px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: -20px; right: -20px;
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: rgba(122,184,178,0.15);
+    }
+    .stat-card .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: #7ab8b2;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-card .label { font-size: 0.85rem; color: #adbfcc; line-height: 1.4; }
+
+    .teal-card {
+      background: var(--teal);
+      color: var(--white);
+      border-radius: 12px;
+      padding: 28px 24px;
+    }
+    .teal-card .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: var(--teal-lt);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .teal-card .label { font-size: 0.85rem; color: rgba(255,255,255,0.8); line-height: 1.4; }
+
+    /* ── PULL QUOTE ── */
+    /* Usage: <blockquote class="pull-quote"> */
+    .pull-quote {
+      border-left: 4px solid var(--teal);
+      background: var(--white);
+      border-radius: 0 12px 12px 0;
+      padding: 28px 32px;
+      margin: 36px 0;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    }
+    .pull-quote p {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+    .pull-quote .attribution {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+
+    /* ── INTERVIEW / PROFILE CARDS (2-column) ── */
+    /* Usage: place two .interview-card inside a <div class="interview-grid"> */
+    .interview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: 36px 0;
+    }
+    .interview-card {
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      border: 1px solid var(--warm);
+    }
+    .interview-card .card-header {
+      background: var(--navy);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .avatar-1 { background: #7ab8b2; color: var(--navy); }
+    .avatar-2 { background: var(--accent); color: var(--white); }
+    .card-header .name { font-family: 'Source Serif 4', serif; font-weight: 600; color: var(--white); font-size: 0.95rem; }
+    .card-header .role { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #7ab8b2; text-transform: uppercase; }
+    .interview-card .card-body { padding: 24px; }
+    .interview-card .card-body p { font-size: 0.95rem; margin-bottom: 0; }
+
+    /* ── BULLETED THEME LIST ── */
+    /* Usage: <ul class="theme-list"> with <li> items containing a .theme-icon span */
+    .theme-list { list-style: none; margin: 24px 0; }
+    .theme-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--warm);
+      font-size: 0.97rem;
+    }
+    .theme-list li:last-child { border-bottom: none; }
+    .theme-icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: var(--teal-lt);
+      color: var(--teal);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ── COMPARISON TABLE ── */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 32px 0;
+      font-size: 0.95rem;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    }
+    .compare-table thead tr { background: var(--navy); color: var(--white); }
+    .compare-table th {
+      padding: 16px 20px;
+      text-align: left;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .compare-table td { padding: 14px 20px; border-bottom: 1px solid var(--warm); }
+    .compare-table tbody tr:nth-child(even) { background: var(--white); }
+    .compare-table tbody tr:nth-child(odd) { background: var(--cream); }
+    .tag {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+    }
+    .tag-pro { background: #d4ecea; color: var(--teal); }
+    .tag-con { background: #fce8df; color: #b04010; }
+
+    /* ── TIMELINE ── */
+    .timeline { position: relative; margin: 36px 0; padding-left: 32px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--teal), var(--navy));
+    }
+    .timeline-item { position: relative; margin-bottom: 28px; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -28px; top: 6px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--teal);
+      border: 2px solid var(--cream);
+      box-shadow: 0 0 0 2px var(--teal);
+    }
+    .timeline-item .year { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: var(--teal); margin-bottom: 4px; }
+    .timeline-item h4 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--navy); margin-bottom: 4px; }
+    .timeline-item p { font-size: 0.9rem; margin-bottom: 0; }
+
+    /* ── HIGHLIGHT BOX ── */
+    /* Usage: <div class="highlight-box"> for a dark featured callout */
+    .highlight-box {
+      background: linear-gradient(135deg, var(--navy) 0%, #1a3a5c 100%);
+      color: var(--white);
+      border-radius: 16px;
+      padding: 48px 40px;
+      margin: 36px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .highlight-box::before {
+      content: '';
+      position: absolute;
+      bottom: -40px; right: -40px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: rgba(122,184,178,0.1);
+    }
+    .highlight-box h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 16px; color: #7ab8b2; }
+    .highlight-box p { color: rgba(255,255,255,0.85); margin-bottom: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      color: #7ab8b2;
+      text-align: center;
+      padding: 32px 40px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .header-inner { padding: 48px 24px 40px; }
+      main { padding: 0 24px 60px; }
+      .visual-row, .visual-row.two-col, .interview-grid { grid-template-columns: 1fr; }
+      nav ul { padding: 0 16px; }
+      nav a { padding: 14px 12px; font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════
+       HEADER — edit the eyebrow, title, and subtitle
+  ════════════════════════════════════════ -->
+  <header>
+    <div class="header-bg"></div>
+    <div class="header-inner">
+      <p class="header-eyebrow">Your Course Name · Assignment Type</p>
+      <h1>Your Main Title with an <em>Italic Accent</em> Word</h1>
+      <p class="header-sub">A one or two sentence description of what this page covers goes here.</p>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════
+       STICKY NAV — update href anchors to match your section ids
+  ════════════════════════════════════════ -->
+  <nav>
+    <ul>
+      <li><a href="#introduction">Introduction</a></li>
+      <li><a href="#body">Analysis</a></li>
+      <li><a href="#conclusion">Conclusion</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <!-- ═══════════════════════════════════════
+         SECTION 1 — INTRODUCTION
+    ════════════════════════════════════════ -->
+    <section id="introduction">
+      <p class="section-label">01 — Introduction</p>
+      <h2>Your Introduction Heading</h2>
+
+      <!-- Body text: just write paragraphs -->
+      <p>Your introduction paragraph goes here. Provide context, background, and frame the topic for the reader.</p>
+      <p>A second paragraph if needed.</p>
+
+      <!-- VISUAL: 3 stat cards — replace numbers and labels -->
+      <div class="visual-row">
+        <div class="stat-card">
+          <div class="num">00%</div>
+          <div class="label">A short statistic or fact label goes here</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">0000</div>
+          <div class="label">A short statistic or fact label goes here</div>
+        </div>
+        <div class="teal-card">
+          <div class="num">$0B</div>
+          <div class="label">A short statistic or fact label goes here</div>
+        </div>
+      </div>
+
+      <p>Continue your introduction here after the stat cards.</p>
+
+      <!-- VISUAL: Pull quote — replace text and attribution -->
+      <blockquote class="pull-quote">
+        <p>"Your pull quote from one of the interviews goes here."</p>
+        <span class="attribution">— Interviewee Name or Role</span>
+      </blockquote>
+
+      <!-- VISUAL: Two interview profile cards -->
+      <h3>The Interviewees</h3>
+      <div class="interview-grid">
+        <div class="interview-card">
+          <div class="card-header">
+            <div class="avatar avatar-1">I1</div><!-- Change initials if you like -->
+            <div>
+              <div class="name">Interviewee One Name / Role</div>
+              <div class="role">Professional Title</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <p>Brief description of this person's background and relevance to the topic.</p>
+          </div>
+        </div>
+        <div class="interview-card">
+          <div class="card-header">
+            <div class="avatar avatar-2">I2</div>
+            <div>
+              <div class="name">Interviewee Two Name / Role</div>
+              <div class="role">Professional Title</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <p>Brief description of this person's background and relevance to the topic.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         SECTION 2 — BODY / ANALYSIS
+    ════════════════════════════════════════ -->
+    <section id="body">
+      <p class="section-label">02 — Analysis</p>
+      <h2>Your Analysis Heading</h2>
+
+      <p>Your body text goes here. Introduce the themes or arguments you'll be discussing.</p>
+
+      <!-- VISUAL: Bulleted theme list — add or remove <li> items as needed -->
+      <h3>Key Themes</h3>
+      <ul class="theme-list">
+        <li>
+          <span class="theme-icon">🔗</span>
+          <div><strong>Theme One Title:</strong> Description of this theme from the interviews.</div>
+        </li>
+        <li>
+          <span class="theme-icon">⚕️</span>
+          <div><strong>Theme Two Title:</strong> Description of this theme from the interviews.</div>
+        </li>
+        <li>
+          <span class="theme-icon">📊</span>
+          <div><strong>Theme Three Title:</strong> Description of this theme from the interviews.</div>
+        </li>
+        <li>
+          <span class="theme-icon">⚖️</span>
+          <div><strong>Theme Four Title:</strong> Description of this theme from the interviews.</div>
+        </li>
+      </ul>
+
+      <!-- VISUAL: Pull quote -->
+      <blockquote class="pull-quote">
+        <p>"Another quote from your interviews that illustrates a key point."</p>
+        <span class="attribution">— Interviewee Name or Role</span>
+      </blockquote>
+
+      <!-- VISUAL: Comparison table — edit headers and rows as needed -->
+      <h3>Comparing Perspectives</h3>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Topic</th>
+            <th>Interviewee 1 View</th>
+            <th>Interviewee 2 View</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Row 1 Topic</strong></td>
+            <td>What interviewee 1 said</td>
+            <td>What interviewee 2 said</td>
+            <td><span class="tag tag-pro">Benefit</span></td>
+          </tr>
+          <tr>
+            <td><strong>Row 2 Topic</strong></td>
+            <td>What interviewee 1 said</td>
+            <td>What interviewee 2 said</td>
+            <td><span class="tag tag-con">Challenge</span></td>
+          </tr>
+          <tr>
+            <td><strong>Row 3 Topic</strong></td>
+            <td>What interviewee 1 said</td>
+            <td>What interviewee 2 said</td>
+            <td><span class="tag tag-pro">Benefit</span></td>
+          </tr>
+          <tr>
+            <td><strong>Row 4 Topic</strong></td>
+            <td>What interviewee 1 said</td>
+            <td>What interviewee 2 said</td>
+            <td><span class="tag tag-con">Challenge</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- VISUAL: Timeline — add or remove .timeline-item blocks as needed -->
+      <h3>Timeline (optional — delete if not needed)</h3>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="year">Year or Label</div>
+          <h4>Event Title</h4>
+          <p>Short description of this event or milestone.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="year">Year or Label</div>
+          <h4>Event Title</h4>
+          <p>Short description of this event or milestone.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="year">Year or Label</div>
+          <h4>Event Title</h4>
+          <p>Short description of this event or milestone.</p>
+        </div>
+      </div>
+
+      <!-- VISUAL: 2-column stat cards -->
+      <div class="visual-row two-col">
+        <div class="stat-card">
+          <div class="num">0 in 0</div>
+          <div class="label">A statistic relevant to your analysis</div>
+        </div>
+        <div class="teal-card">
+          <div class="num">↑ 00%</div>
+          <div class="label">Another statistic relevant to your analysis</div>
+        </div>
+      </div>
+
+      <p>Closing paragraph for your body/analysis section.</p>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         SECTION 3 — CONCLUSION
+    ════════════════════════════════════════ -->
+    <section id="conclusion">
+      <p class="section-label">03 — Conclusion</p>
+      <h2>Your Conclusion Heading</h2>
+
+      <p>Your conclusion paragraph goes here. Summarize findings, reflect on what you learned.</p>
+      <p>A second paragraph expanding on implications or takeaways.</p>
+
+      <!-- VISUAL: Dark highlight/callout box -->
+      <div class="highlight-box">
+        <h3>Key Takeaway Title</h3>
+        <p>A summary of your most important conclusion or insight from the two interviews. This stands out visually as a featured statement.</p>
+      </div>
+
+      <p>Final paragraph — closing thoughts, future directions, or personal reflection.</p>
+
+      <!-- VISUAL: Pull quote to close -->
+      <blockquote class="pull-quote">
+        <p>"A closing quote that resonates with your overall argument."</p>
+        <span class="attribution">— Interviewee Name or Role</span>
+      </blockquote>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════
+       FOOTER — update the text
+  ════════════════════════════════════════ -->
+  <footer>
+    Your Course Name · Assignment Title · Your Name
+  </footer>
+
+</body>
+</html>
