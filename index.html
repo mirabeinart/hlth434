@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Page Title Here</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Source+Serif+4:wght@300;400;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy:    #0f2240;
+      --teal:    #1a7a6e;
+      --teal-lt: #d4ecea;
+      --cream:   #f8f4ef;
+      --warm:    #e8dfd4;
+      --accent:  #c95f2a;
+      --text:    #1c1c1c;
+      --muted:   #5a6070;
+      --white:   #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Serif 4', Georgia, serif;
+      background: var(--cream);
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--navy);
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    .header-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 72px 40px 64px;
+      position: relative;
+      z-index: 2;
+    }
+    .header-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #7ab8b2;
+      margin-bottom: 20px;
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 800;
+      line-height: 1.15;
+      max-width: 720px;
+    }
+    header h1 em { color: #7ab8b2; font-style: italic; }
+    .header-sub {
+      margin-top: 20px;
+      font-size: 1rem;
+      color: #adbfcc;
+      max-width: 560px;
+    }
+    .header-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      z-index: 1;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--warm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    nav ul {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      list-style: none;
+    }
+    nav a {
+      display: block;
+      padding: 16px 22px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    nav a:hover { color: var(--teal); border-color: var(--teal); }
+
+    /* ── LAYOUT ── */
+    main { max-width: 960px; margin: 0 auto; padding: 0 40px 80px; }
+    section { padding: 72px 0 32px; }
+    section + section { border-top: 1px solid var(--warm); }
+
+    /* ── TYPOGRAPHY ── */
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 14px;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--navy);
+      margin-bottom: 24px;
+    }
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--navy);
+      margin: 36px 0 16px;
+    }
+    p { margin-bottom: 1.2em; color: #333; }
+
+    /* ── STAT CARDS (3-column row) ── */
+    /* Usage: place inside a <div class="visual-row"> */
+    .visual-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin: 36px 0;
+    }
+    .visual-row.two-col { grid-template-columns: 1fr 1fr; }
+
+    .stat-card {
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 12px;
+      padding: 28px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: -20px; right: -20px;
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: rgba(122,184,178,0.15);
+    }
+    .stat-card .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: #7ab8b2;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-card .label { font-size: 0.85rem; color: #adbfcc; line-height: 1.4; }
+
+    .teal-card {
+      background: var(--teal);
+      color: var(--white);
+      border-radius: 12px;
+      padding: 28px 24px;
+    }
+    .teal-card .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: var(--teal-lt);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .teal-card .label { font-size: 0.85rem; color: rgba(255,255,255,0.8); line-height: 1.4; }
+
+    /* ── PULL QUOTE ── */
+    /* Usage: <blockquote class="pull-quote"> */
+    .pull-quote {
+      border-left: 4px solid var(--teal);
+      background: var(--white);
+      border-radius: 0 12px 12px 0;
+      padding: 28px 32px;
+      margin: 36px 0;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    }
+    .pull-quote p {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+    .pull-quote .attribution {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+
+    /* ── INTERVIEW / PROFILE CARDS (2-column) ── */
+    /* Usage: place two .interview-card inside a <div class="interview-grid"> */
+    .interview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: 36px 0;
+    }
+    .interview-card {
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      border: 1px solid var(--warm);
+    }
+    .interview-card .card-header {
+      background: var(--navy);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .avatar-1 { background: #7ab8b2; color: var(--navy); }
+    .avatar-2 { background: var(--accent); color: var(--white); }
+    .card-header .name { font-family: 'Source Serif 4', serif; font-weight: 600; color: var(--white); font-size: 0.95rem; }
+    .card-header .role { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #7ab8b2; text-transform: uppercase; }
+    .interview-card .card-body { padding: 24px; }
+    .interview-card .card-body p { font-size: 0.95rem; margin-bottom: 0; }
+
+    /* ── BULLETED THEME LIST ── */
+    /* Usage: <ul class="theme-list"> with <li> items containing a .theme-icon span */
+    .theme-list { list-style: none; margin: 24px 0; }
+    .theme-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--warm);
+      font-size: 0.97rem;
+    }
+    .theme-list li:last-child { border-bottom: none; }
+    .theme-icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: var(--teal-lt);
+      color: var(--teal);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ── COMPARISON TABLE ── */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 32px 0;
+      font-size: 0.95rem;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    }
+    .compare-table thead tr { background: var(--navy); color: var(--white); }
+    .compare-table th {
+      padding: 16px 20px;
+      text-align: left;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .compare-table td { padding: 14px 20px; border-bottom: 1px solid var(--warm); }
+    .compare-table tbody tr:nth-child(even) { background: var(--white); }
+    .compare-table tbody tr:nth-child(odd) { background: var(--cream); }
+    .tag {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+    }
+    .tag-pro { background: #d4ecea; color: var(--teal); }
+    .tag-con { background: #fce8df; color: #b04010; }
+
+    /* ── TIMELINE ── */
+    .timeline { position: relative; margin: 36px 0; padding-left: 32px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--teal), var(--navy));
+    }
+    .timeline-item { position: relative; margin-bottom: 28px; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -28px; top: 6px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--teal);
+      border: 2px solid var(--cream);
+      box-shadow: 0 0 0 2px var(--teal);
+    }
+    .timeline-item .year { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: var(--teal); margin-bottom: 4px; }
+    .timeline-item h4 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--navy); margin-bottom: 4px; }
+    .timeline-item p { font-size: 0.9rem; margin-bottom: 0; }
+
+    /* ── HIGHLIGHT BOX ── */
+    /* Usage: <div class="highlight-box"> for a dark featured callout */
+    .highlight-box {
+      background: linear-gradient(135deg, var(--navy) 0%, #1a3a5c 100%);
+      color: var(--white);
+      border-radius: 16px;
+      padding: 48px 40px;
+      margin: 36px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .highlight-box::before {
+      content: '';
+      position: absolute;
+      bottom: -40px; right: -40px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: rgba(122,184,178,0.1);
+    }
+    .highlight-box h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 16px; color: #7ab8b2; }
+    .highlight-box p { color: rgba(255,255,255,0.85); margin-bottom: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      color: #7ab8b2;
+      text-align: center;
+      padding: 32px 40px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .header-inner { padding: 48px 24px 40px; }
+      main { padding: 0 24px 60px; }
+      .visual-row, .visual-row.two-col, .interview-grid { grid-template-columns: 1fr; }
+      nav ul { padding: 0 16px; }
+      nav a { padding: 14px 12px; font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════
+       HEADER — edit the eyebrow, title, and subtitle
+  ════════════════════════════════════════ -->
+  <header>
+    <div class="header-bg"></div>
+    <div class="header-inner">
+      <p class="header-eyebrow">HLTH434 Midterm Project · Mira Beinart and Emma Finnerty</p>
+      <h1>How Technology is Transforming Healthcare Workflows</h1>
+      <p class="header-sub">Insights from a cardiologist and a healthcare workforce engagement advisor</p>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════
+       STICKY NAV — update href anchors to match your section ids
+  ════════════════════════════════════════ -->
+  <nav>
+    <ul>
+      <li><a href="#introduction">Introduction</a></li>
+      <li><a href="#body">Takeaways</a></li>
+      <li><a href="#conclusion">Conclusion</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <!-- ═══════════════════════════════════════
+         SECTION 1 — INTRODUCTION
+    ════════════════════════════════════════ -->
+    <section id="introduction">
+      <p class="section-label">Introduction</p>
+      <h2>Public Health Informatics in the Workforce</h2>
+
+      <!-- Body text: just write paragraphs -->
+      <p>Public health informatics is the use of data, technology and information systems to improve population health outcomes. It focuses on how data is collected, shared and used to guide decision-making in healthcare and public health systems.</p>
+      <p>This project explores how informatics tools, like electronic health records (EHRs) and artificial intelligence, are used in real-world healthcare settings.</p>
+
+      <!-- VISUAL: 3 stat cards — replace numbers and labels -->
+      <!-- <div class="visual-row">
+        <div class="stat-card">
+          <div class="num">00%</div>
+          <div class="label">A short statistic or fact label goes here</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">0000</div>
+          <div class="label">A short statistic or fact label goes here</div>
+        </div>
+        <div class="teal-card">
+          <div class="num">$0B</div>
+          <div class="label">A short statistic or fact label goes here</div>
+        </div>
+      </div> -->
+
+      <!-- VISUAL: Pull quote — replace text and attribution 
+      <blockquote class="pull-quote">
+        <p>"Your pull quote from one of the interviews goes here."</p>
+        <span class="attribution">— Interviewee Name or Role</span>
+      </blockquote> -->
+
+      <!-- VISUAL: Two interview profile cards -->
+      <h3>The Interviewees</h3>
+      <div class="interview-grid">
+        <div class="interview-card">
+          <div class="card-header">
+            <div class="avatar avatar-1">I1</div><!-- Change initials if you like -->
+            <div>
+              <div class="name">Sean Beinart, MD</div>
+              <div class="role">Electrophysiologist</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <p>Dr. Beinart poopy works directly with patients in a hospital system, utilizing EHRs every day.</p>
+          </div>
+        </div>
+        <div class="interview-card">
+          <div class="card-header">
+            <div class="avatar avatar-2">I2</div>
+            <div>
+              <div class="name">Tracey Doubrava</div>
+              <div class="role">Workforce engagement advisor</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <p>Tracey analyzes healthcare data to improve staff and patient outcomes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         SECTION 2 — BODY / ANALYSIS
+    ════════════════════════════════════════ -->
+    <section id="body">
+      <p class="section-label">Analysis</p>
+      <h2>Key Takeaways</h2>
+
+<!-- key takeaway 1-->
+      <h3>1. Technology has made healthcare work more efficient and connected</h3>
+
+      <p>Technology has significantly improved efficiency and communication across healthcare settings. Electronic health records allow providers to access patient information quickly, communicate with other members of the care team and share data across different health systems.</p>
+
+      <!-- VISUAL: Pull quote -->
+      <blockquote class="pull-quote">
+        <p>"Everything I do... communicating with my nurses, my healthcare team, interacting with patients... is done using Epic... it creates a universe of information sharing that is quite powerful."</p>
+        <span class="attribution">— Beinart</span>
+      </blockquote>
+
+      <p>On the data side, technology has also made it easier to interpret and apply information. Doubrava said that the tools to help clients understand their data have gotten easier to use over the years, allowing professionals to work more efficiently with large datasets.</p>
+
+
+ <!-- key takeaway 2-->
+      <h3>2. Artificial intelligence is becoming a daily tool in healthcare</h3>
+
+      <p>Artificial intelligence is increasingly being used to improve efficiency in both clinical and data-focused roles. In clinical settings, AI can assist with documentation and reduce time spent on administrative tasks. Beinart described using an AI tool that listens to patient conversations and generates summaries. He said that it allows more patients to be seen by streamlining charting.</p>
+      <p>In data and consulting roles, AI is used to analyze and summarize large amounts of information more quikcly.</p>
+      <!-- VISUAL: Pull quote -->
+      <blockquote class="pull-quote">
+        <p>"We are using it every day... I can summarize [client] comments and get recommendations much quicker than I could a year ago."</p>
+        <span class="attribution">— Doubrava</span>
+      </blockquote>
+
+      <!-- key takeaway 3-->
+      <h3>3. Technology use varies across different healthcare roles</h3>
+
+      <p>The way technology is used in healthcare depends heavily on the role and setting. Clinical professionals tend to rely on systems like EHRs to support patient care, diagnosis and communication. Beinart described how all documentation, test results and communication are integrated into Epic, creating a centralized system for patient care.</p>
+      <p>In contrast, professionals working in healthcare data and consulting use technology primarily for data collection, analysis and reporting. Doubrava explained that her company uses proproetary tools to survey employees and analyze engagement and patient experience data, which helps guide organizational decisions. These differences show how technology supports both individual patient care and broader system-level improvements.</p>
+      
+
+      <!-- key takeaway 4-->
+      <h3>4. Technology has streamlined healthcare but created new dependencies</h3>
+
+      <p>While technology has made healthcare more efficient, it has also created a strong dependence on digital systems. When systems fail, it can significantly disrupt care. Beinart described a system-wide outage:</p>
+      <!-- VISUAL: Pull quote -->
+      <blockquote class="pull-quote">
+        <p>"It was pretty devastating to not have a network... we didn't have patient records... we just had a piece of paper that was blank."</p>
+        <span class="attribution">— Beinart</span>
+      </blockquote>
+      <p>At the same time, while functioning properly, these tools allow for faster communication, quicker access to data and more efficient workflows. Doubrava noted that improved tools enable faster data collection and quicker turnaround for results, helping healthcare organizations make timely improvements.</p>
+     </section>
+      
+
+      <!-- VISUAL: Bulleted theme list — add or remove <li> items as needed -->
+      <!-- <h3>Key Themes</h3>
+      <ul class="theme-list">
+        <li>
+          <span class="theme-icon">🔗</span>
+          <div><strong>Theme One Title:</strong> Description of this theme from the interviews.</div>
+        </li>
+        <li>
+          <span class="theme-icon">⚕️</span>
+          <div><strong>Theme Two Title:</strong> Description of this theme from the interviews.</div>
+        </li>
+        <li>
+          <span class="theme-icon">📊</span>
+          <div><strong>Theme Three Title:</strong> Description of this theme from the interviews.</div>
+        </li>
+        <li>
+          <span class="theme-icon">⚖️</span>
+          <div><strong>Theme Four Title:</strong> Description of this theme from the interviews.</div>
+        </li>
+      </ul> -->
+
+      
+
+      
+
+    <!-- ═══════════════════════════════════════
+         SECTION 3 — CONCLUSION
+    ════════════════════════════════════════ -->
+    <section id="conclusion">
+      <p class="section-label">Conclusion</p>
+      <h2>What We Learned</h2>
+
+      <p>This project showed how central technology has become crucial to modern healthcare.</p>
+      
+
+      
+
+      <!-- VISUAL: Timeline — add or remove .timeline-item blocks as needed -->
+     
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="year">One</div>
+          <h4>Technology is essential, not optional</h4>
+          <p>From patient care to data analysis, nearly every aspect of healthcare now depends on digital systems.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="year">Two</div>
+          <h4>Efficiency comes with trade-offs</h4>
+          <p>While tools like EHRs and AI improve workflow, they also create vulnerabilities when systems fail.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="year">Three</div>
+          <h4>Healthcare roles shape how technology is used</h4>
+          <p>Clinical professionals and data analysts rely on different tools, but both contribute to improving patient outcomes.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════
+       FOOTER — update the text
+  ════════════════════════════════════════ -->
+  <footer>
+    HLTH434 Midterm · Mira Beinart and Emma Finnerty
+  </footer>
+
+</body>
+</html>
